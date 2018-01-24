@@ -1,0 +1,20 @@
+{:navgroup: .navgroup}
+{:topicgroup: .topicgroup}
+
+{: .toc subcollection="containers" audience="compute" href="/docs/services/WorkloadScheduler/index.html"}
+IBM Workload Scheduler
+
+    {: .navgroup id="learn"}
+    index.md
+    wkldschedsvc001a.md
+    {: .navgroup-end}
+
+    {: .navgroup id="reference"}
+    wkldschedadvanced.md
+    {: .navgroup-end}
+
+    {: .navgroup id="howto"}
+    wkldscheddocker.md
+    wkldschedhybrid.md
+    wkldsched_getstarted.md
+    {: .navgroup-end}
