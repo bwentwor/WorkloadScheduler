@@ -16,12 +16,12 @@ lastupdated: "2017-07-05"
 {:download: .download}
 
 
-# Scheduling with IBM Containers for {{site.data.keyword.Bluemix_notm}}
+# Scheduling with {{site.data.keyword.containerlong}} for {{site.data.keyword.Bluemix_notm}}
 {: #gettingstarted}
 
 You can use one of the IBM Scheduler agent images from the {{site.data.keyword.Bluemix_short}} catalog to create a single container.
 
-You can deploy a container with the IBM Scheduler agent images installed and configured to connect to the {{site.data.keyword.workloadscheduler}} {{site.data.keyword.Bluemix_notm}} service. The {{site.data.keyword.workloadscheduler}} images are supplied for IBM Containers for {{site.data.keyword.Bluemix_notm}}.
+You can deploy a container with the IBM Scheduler agent images installed and configured to connect to the {{site.data.keyword.workloadscheduler}} {{site.data.keyword.Bluemix_notm}} service. The {{site.data.keyword.workloadscheduler}} images are supplied for {{site.data.keyword.containerlong}} for {{site.data.keyword.Bluemix_notm}}.
 
 Every IBM Scheduler agent image provides the following software package.
 
@@ -64,7 +64,7 @@ You can update your IBM Scheduler agent with the most recent image version avail
 To update the IBM Scheduler agent with the most recent image version:
 
 1.  Stop and delete the container.
-2.  Repeat the steps for creating a container outlined in [Scheduling with IBM Containers for {{site.data.keyword.Bluemix_notm}}](#) to create a new container using the most recent agent image available. When prompted, specify the existing volume created for the original container.
+2.  Repeat the steps for creating a container outlined in [Scheduling with {{site.data.keyword.containerlong}} for {{site.data.keyword.Bluemix_notm}}](#) to create a new container using the most recent agent image available. When prompted, specify the existing volume created for the original container.
 
 ## Related Links
 {: #rellinks}
