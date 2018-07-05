@@ -20,7 +20,7 @@ lastupdated: "2017-07-05"
 {: #gettingstarted}
 
 
-You can use one of the IBM Scheduler agent image from the {{site.data.keyword.Bluemix_short}} catalog to create a single container.
+You can use the IBM Scheduler agent image from the {{site.data.keyword.Bluemix_short}} catalog to create a single container.
 
 You can deploy a container with the IBM Scheduler agent image installed and configured to connect to the {{site.data.keyword.workloadscheduler}} {{site.data.keyword.Bluemix_notm}} service. The {{site.data.keyword.workloadscheduler}} image (**registry.bluemix.net/ibm_wa_agent**) is supplied for IBM Cloud Kubernetes Service for {{site.data.keyword.Bluemix_notm}}. For more information about {{site.data.keyword.Bluemix_notm}} Kubernetes Service, see the relevant documentation.
 
