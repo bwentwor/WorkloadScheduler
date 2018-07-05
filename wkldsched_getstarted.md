@@ -77,6 +77,7 @@ Perform the following steps:
  9. Bind your cluster service to your service name:
 
      `ibmcloud cs cluster-service-bind <your_service_id> default <your service name>`
+       
        where <dl>
   <dt><strong>your_service_id</strong></dt>
   <dd>is the ID of your service.</dd>
