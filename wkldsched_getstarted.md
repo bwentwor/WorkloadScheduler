@@ -19,53 +19,132 @@ lastupdated: "2017-07-05"
 # Scheduling with IBM Cloud Kubernetes Service for {{site.data.keyword.Bluemix_notm}}
 {: #gettingstarted}
 
-You can use one of the IBM Scheduler agent images from the {{site.data.keyword.Bluemix_short}} catalog to create a single container.
 
-You can deploy a container with the IBM Scheduler agent images installed and configured to connect to the {{site.data.keyword.workloadscheduler}} {{site.data.keyword.Bluemix_notm}} service. The {{site.data.keyword.workloadscheduler}} images are supplied for IBM Cloud Kubernetes Service for {{site.data.keyword.Bluemix_notm}}.
+You can use one of the IBM Scheduler agent image from the {{site.data.keyword.Bluemix_short}} catalog to create a single container.
 
-Every IBM Scheduler agent image provides the following software package.
+You can deploy a container with the IBM Scheduler agent image installed and configured to connect to the {{site.data.keyword.workloadscheduler}} {{site.data.keyword.Bluemix_notm}} service. The {{site.data.keyword.workloadscheduler}} image (**registry.bluemix.net/ibm_wa_agent**) is supplied for IBM Cloud Kubernetes Service for {{site.data.keyword.Bluemix_notm}}. For more information about {{site.data.keyword.Bluemix_notm}} Kubernetes Service, see the relevant documentation.
+
+The IBM Scheduler agent image provides the following software package:
 
 -   {{site.data.keyword.workloadscheduler}} dynamic agent, at the latest released version.
 
-You can use one of the IBM Scheduler agent images from the {{site.data.keyword.Bluemix_notm}} catalog to create a single container.
+You can use the IBM Scheduler agent image from the {{site.data.keyword.Bluemix_notm}} catalog to create a single container.
 
-1.  Instance a {{site.data.keyword.workloadscheduler}} service.
-2.  From the {{site.data.keyword.Bluemix_notm}} menu, click Containers, then IBM Public Repositories. The IBM Scheduler agent image is located in this page: [https://console.bluemix.net/containers-kubernetes/home/registryPublicImages/ ![External link icon](../../icons/launch-glyph.svg "External link icon")](https://console.bluemix.net/containers-kubernetes/home/registryPublicImages/) with the name ibm_wa_agent.
-3.  To build your container, select the IBM Scheduler agent image The container creation page opens.
-4.  Create the container.
-    1.  Select one of the {{site.data.keyword.Bluemix_notm}} spaces in your environment.
-    2.  In the **Container name** field, enter the name for the container.
-    3.  In the **Size** field, select a container size. The suggested minimum size is **Medium** (1 GB Memory, 10 GB Storage).
-5.  Expand **Advanced Options** to add a volume, add environment variables, or bind a {{site.data.keyword.Bluemix_notm}} service.
-    1.  Add a volume. To persist agent data, select **Create a volume** if this is the first time you are provisioning the agent, then select **Assign an existing volume**. If the agent has been previously created, skip to **Assign an existing volume**.
+The following prerequisites are required:
 
-        To create the volume:
-           1.  Select **Create a volume**.
-2.  Specify a volume name and optionally a file share.
-        To assign the volume to the container:
-           1.  Select **Assign an existing volume**.
-2.  Select the volume you created previously from the list to assign the volume to the container and specify the following path: /home/wauser/TWA/TWS/stdlist.
-    2.  Define an environment variable to assign a name to the agent.
-        1.  Click **Add a new environment variable**.
-        2.  Specify AGENTNAME as the environment variable name in the field on the left, and specify a value for the variable in the field on the right.
+-   {{site.data.keyword.Bluemix_notm}} CLI
+-   Container service plugin
 
-            **Important:**
+For more information about the {{site.data.keyword.Bluemix_notm}} CLI, see the documentation about getting started with {{site.data.keyword.Bluemix_notm}} CLI.
+ 
+Perform the following steps:
 
-            -   During the agent registration, the system automatically adds three characters to the beginning of the value specified as the agent name.
-            -   The maximum supported length for the agent name is 13 characters.
-6.  Bind the IBM Scheduler agent to your instance of the {{site.data.keyword.workloadscheduler}} service, selecting the service from the list and clicking **Add**.
-7.  Click **Create** to initiate the provisioning of the IBM Scheduler agent The agent is ready to be started and used after a few seconds.
+ 1. Instance a {{site.data.keyword.workloadscheduler}} service.
+ 2. Login to {{site.data.keyword.Bluemix_notm}} using your account credentials. For example, to login to the US South region, type the following command: 
 
-## Updating the IBM Scheduler agent
-{: #agentupgrade}
+    `ibmcloud login -a https://api.ng.bluemix.net`
 
-You can update your IBM Scheduler agent with the most recent image version available only if you have used a persistent data volume during the creation of the container.
+ 3. Set your {{site.data.keyword.Bluemix_notm}} region by selecting a region from the on-screen list: 
 
-To update the IBM Scheduler agent with the most recent image version:
+    `ibmcloud  cs region-set`
 
-1.  Stop and delete the container.
-2.  Repeat the steps for creating a container outlined in [Scheduling with IBM Cloud Kubernetes Service for {{site.data.keyword.Bluemix_notm}}](#) to create a new container using the most recent agent image available. When prompted, specify the existing volume created for the original container.
+ 4. Set an organization and a space: 
 
+    `ibmcloud target -o <OrgName> -s <SpaceName>`
+   
+   where <dl>
+  <dt><strong>OrgName</strong></dt>
+  <dd>is the name of the organization.</dd>
+  <dt><strong>SpaceName</strong></dt>
+  <dd>is the name of the space.</dd>
+ </dl>
+ 
+
+ 5. Create a cluster, if you do not have one already available. See the {{site.data.keyword.Bluemix_notm}} documentation about setting up clusters.
+
+ 6. Configure your cluster and follow the on-screen instructions to export the KUBECONFIG variable: 
+
+    `ibmcloud cs cluster-config mycluster`
+
+ 7. List available {{site.data.keyword.Bluemix_notm}} services: 
+
+    `ibmcloud service list`
+
+ 8. Set your secret token:
+
+    `bx iam oauth-tokens`
+
+ 9. Bind your cluster service to your service name:
+
+     `ibmcloud cs cluster-service-bind <your_service_id> default <your service name>`
+       where <dl>
+  <dt><strong>your_service_id</strong></dt>
+  <dd>is the ID of your service.</dd>
+  <dt><strong>your_service_name</strong></dt>
+  <dd>is the name of your service.</dd>
+ </dl>
+
+ 10. Check that the Kubernetes secret was created:
+
+    `kubectl get secrets --namespace=default`
+
+ 11. Deploy your IBM Scheduler agent on your cluster using the yaml file:
+
+    kubectl apply -f <yaml_file>
+    
+  where <dl>
+  <dt><strong>yaml_file</strong></dt>
+  <dd>is the name of the yaml file.</dd>
+ </dl>  
+
+The following example contains a sample yaml file, which you can customize as necessary and use to deploy the IBM Scheduler agent on your cluster, as described in step 11: 
+
+        apiVersion: extensions/v1beta1
+    kind: Deployment
+    metadata:
+      labels:
+        app: agent
+      name: agent
+      namespace: default
+    spec:
+      selector:
+        matchLabels:
+          app: agent
+      replicas: 1
+      template:
+        metadata:
+          labels:
+            app: agent
+        spec:
+          containers:
+          - image: registry.bluemix.net/ibm_wa_agent
+            name: agent
+            resources:
+              limits:
+                cpu: 1000m
+                memory: 500Mi
+            env:
+            - name: AGENTNAME
+              value: <agent_workstation_name>
+            volumeMounts:
+            - mountPath: /opt/service-bind
+              name: service-bind-volume
+          imagePullSecrets:
+          - name: private-registry
+          volumes:
+          - name: service-bind-volume
+            secret:
+              defaultMode: 420
+              secretName: <secret_name> 
+
+ where <dl>
+  <dt><strong>agent_workstation_name</strong></dt>
+  <dd>is the name of the workstation where the agent is installed.</dd>
+  <dt><strong>secret_name</strong></dt>
+  <dd>is the name of your secret. To obtain this name, use the **kubectl get secrets** command.</dd>
+  </dl>
+  
+  Your IBM Scheduler agent is now up and running.
 ## Related Links
 {: #rellinks}
 
