@@ -39,65 +39,64 @@ For more information about the {{site.data.keyword.Bluemix_notm}} CLI, see the d
  
 Perform the following steps:
 
- 1. Instance a {{site.data.keyword.workloadscheduler}} service.
- 
- 2. Login  to {{site.data.keyword.Bluemix_notm}} using your account credentials. For example, to login to the US South region, type the   following command: 
-
+ 1.  Instance a Workload Scheduler service.
+    
+ 2.  Login to {{site.data.keyword.Bluemix_notm}} using your account credentials. For example, to login to the US South region, type the following command:
+    
     `ibmcloud login -a https://api.ng.bluemix.net`
-
- 3. Set your {{site.data.keyword.Bluemix_notm}} region by selecting a region from the on-screen list: 
-
-    `ibmcloud  cs region-set`
-
- 4. Set an organization and a space: 
-
+    
+ 3.  Set your {{site.data.keyword.Bluemix_notm}} region by selecting a region from the on-screen list:
+    
+    `ibmcloud cs region-set`
+    
+ 4.  Set an organization and a space:
+    
     `ibmcloud target -o <OrgName> -s <SpaceName>`
-   
-   where <dl>
-  <dt><strong>OrgName</strong></dt>
-  <dd>is the name of the organization.</dd>
-  <dt><strong>SpaceName</strong></dt>
-  <dd>is the name of the space.</dd>
- </dl>
  
+
+ where
+ **OrgName**
+        is the name of the organization.
+    **SpaceName**
+        is the name of the space.     
 
  5. Create a cluster, if you do not have one already available. See the {{site.data.keyword.Bluemix_notm}} documentation about setting up clusters.
-
  6. Configure your cluster and follow the on-screen instructions to export the KUBECONFIG variable: 
-
-    `ibmcloud cs cluster-config mycluster`
-
- 7. List available {{site.data.keyword.Bluemix_notm}} services: 
-
-    `ibmcloud service list`
-
- 8. Set your secret token:
-
-    `bx iam oauth-tokens`
-
- 9. Bind your cluster service to your service name:
-
-     `ibmcloud cs cluster-service-bind <your_service_id> default <your service name>`
-       
-       where <dl>
-  <dt><strong>your_service_id</strong></dt>
-  <dd>is the ID of your service.</dd>
-  <dt><strong>your_service_name</strong></dt>
-  <dd>is the name of your service.</dd>
- </dl>
-
- 10. Check that the Kubernetes secret was created:
-
-    `kubectl get secrets --namespace=default`
-
- 11. Deploy your IBM Scheduler agent on your cluster using the yaml file:
-
-    kubectl apply -f <yaml_file>
+ `ibmcloud cs cluster-config mycluster`
+ 
+ 7. List available {{site.data.keyword.Bluemix_notm}} services:
     
-  where <dl>
-  <dt><strong>yaml_file</strong></dt>
-  <dd>is the name of the yaml file.</dd>
- </dl>  
+    `ibmcloud service list`
+ 8. Set your secret token:
+    
+    `bx iam oauth-tokens`
+ 9. Bind your cluster service to your service name:
+    
+    `ibmcloud cs cluster-service-bind <your_service_id> default <your service name>`
+    
+    where
+    
+    **your_service_id**
+    
+    is the ID of your service.
+    
+    **your_service_name**
+    
+    is the name of your service.
+ 10. Check that the Kubernetes secret was created:
+    
+    `kubectl get secrets --namespace=default`
+ 11. Deploy your IBM Scheduler agent on your cluster using the yaml file:
+    
+    kubectl apply -f
+    
+where
+
+**yaml_file**
+
+is the name of the yaml file.
+
+
 
 The following example contains a sample yaml file, which you can customize as necessary and use to deploy the IBM Scheduler agent on your cluster, as described in step 11: 
 
