@@ -40,7 +40,8 @@ For more information about the {{site.data.keyword.Bluemix_notm}} CLI, see the d
 Perform the following steps:
 
  1. Instance a {{site.data.keyword.workloadscheduler}} service.
- 2. Login to {{site.data.keyword.Bluemix_notm}} using your account credentials. For example, to login to the US South region, type the following command: 
+ 
+ 2. Login  to {{site.data.keyword.Bluemix_notm}} using your account credentials. For example, to login to the US South region, type the   following command: 
 
     `ibmcloud login -a https://api.ng.bluemix.net`
 
