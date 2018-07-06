@@ -52,14 +52,6 @@ Perform the following steps:
  4.  Set an organization and a space:
     
     `ibmcloud target -o <OrgName> -s <SpaceName>`
- 
-
- where <dl>
-  <dt><strong>OrgName</strong></dt>
-  <dd>is the name of the organization.</dd>
-  <dt><strong>SpaceName</strong></dt>
-  <dd>is the name of the space.</dd>
- </dl>    
 
  5. Create a cluster, if you do not have one already available. See the {{site.data.keyword.Bluemix_notm}} documentation about setting up clusters.
  6. Configure your cluster and follow the on-screen instructions to export the KUBECONFIG variable: 
