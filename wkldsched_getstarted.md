@@ -54,11 +54,12 @@ Perform the following steps:
     `ibmcloud target -o <OrgName> -s <SpaceName>`
  
 
- where
- **OrgName**
-        is the name of the organization.
-    **SpaceName**
-        is the name of the space.     
+ where <dl>
+  <dt><strong>OrgName</strong></dt>
+  <dd>is the name of the organization.</dd>
+  <dt><strong>SpaceName</strong></dt>
+  <dd>is the name of the space.</dd>
+ </dl>    
 
  5. Create a cluster, if you do not have one already available. See the {{site.data.keyword.Bluemix_notm}} documentation about setting up clusters.
  6. Configure your cluster and follow the on-screen instructions to export the KUBECONFIG variable: 
@@ -70,31 +71,30 @@ Perform the following steps:
  8. Set your secret token:
     
     `bx iam oauth-tokens`
+ 
  9. Bind your cluster service to your service name:
-    
-    `ibmcloud cs cluster-service-bind <your_service_id> default <your service name>`
-    
-    where
-    
-    **your_service_id**
-    
-    is the ID of your service.
-    
-    **your_service_name**
-    
-    is the name of your service.
+
+     `ibmcloud cs cluster-service-bind <your_service_id> default <your service name>`
+       
+       where <dl>
+  <dt><strong>your_service_id</strong></dt>
+  <dd>is the ID of your service.</dd>
+  <dt><strong>your_service_name</strong></dt>
+  <dd>is the name of your service.</dd>
+ </dl>
+
  10. Check that the Kubernetes secret was created:
-    
+
     `kubectl get secrets --namespace=default`
+
  11. Deploy your IBM Scheduler agent on your cluster using the yaml file:
-    
-    kubectl apply -f
-    
-where
 
-**yaml_file**
-
-is the name of the yaml file.
+    kubectl apply -f <yaml_file>
+    
+  where <dl>
+  <dt><strong>yaml_file</strong></dt>
+  <dd>is the name of the yaml file.</dd>
+ </dl>    
 
 
 
