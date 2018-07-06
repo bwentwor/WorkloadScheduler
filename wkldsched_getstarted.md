@@ -1,8 +1,8 @@
 ---
 
 copyright:
-  years: 2017
-lastupdated: "2017-07-05"
+  years: 2018
+lastupdated: "2018-07-06"
 
 ---
 
@@ -80,8 +80,10 @@ Perform the following steps:
     `kubectl get secrets --namespace=default`
 
  11. Deploy your IBM Scheduler agent on your cluster using the yaml file:
+ 
+     `kubectl apply -f <yaml_file>`
 
-    kubectl apply -f <yaml_file>
+
     
   where <dl>
   <dt><strong>yaml_file</strong></dt>
@@ -92,7 +94,7 @@ Perform the following steps:
 
 The following example contains a sample yaml file, which you can customize as necessary and use to deploy the IBM Scheduler agent on your cluster, as described in step 11: 
 
-        apiVersion: extensions/v1beta1
+    apiVersion: extensions/v1beta1
     kind: Deployment
     metadata:
       labels:
