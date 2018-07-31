@@ -2,7 +2,7 @@
 
 copyright:
   years: 2018
-lastupdated: "2018-07-06"
+lastupdated: "2018-07-31"
 
 ---
 
@@ -39,7 +39,7 @@ For more information about the {{site.data.keyword.Bluemix_notm}} CLI, see the d
  
 Perform the following steps:
 
- 1.  Instance a Workload Scheduler service.
+ 1.  Instance a {{site.data.keyword.workloadscheduler}} service.
     
  2.  Login to {{site.data.keyword.Bluemix_notm}} using your account credentials. For example, to login to the US South region, type the following command:
     
@@ -54,45 +54,39 @@ Perform the following steps:
     `ibmcloud target -o <OrgName> -s <SpaceName>`
 
  5. Create a cluster, if you do not have one already available. See the {{site.data.keyword.Bluemix_notm}} documentation about setting up clusters.
- 6. Configure your cluster and follow the on-screen instructions to export the KUBECONFIG variable: 
- `ibmcloud cs cluster-config mycluster`
  
- 7. List available {{site.data.keyword.Bluemix_notm}} services:
-    
-    `ibmcloud service list`
- 8. Set your secret token:
-    
+ 6. List available clusters:
+ 
+  `bx cs clusters`
+  
+ 7. Configure your cluster and follow the on-screen instructions in order to export the KUBECONFIG variable:
+  `ibmcloud cs cluster-config <your_cluster_name>`
+  
+ 8. List available {{site.data.keyword.Bluemix_notm}} services:
+   `ibmcloud service list`
+ 
+ 9. Set your secret token: 
     `bx iam oauth-tokens`
+    
+ 10. Bind your cluster service to your service name:
  
- 9. Bind your cluster service to your service name:
-
-     `ibmcloud cs cluster-service-bind <your_service_id> default <your service name>`
-       
+ `ibmcloud cs cluster-service-bind <your_cluster_id> default <your_service_name>`
        where <dl>
-  <dt><strong>your_service_id</strong></dt>
-  <dd>is the ID of your service.</dd>
+  <dt><strong>your_cluster_id</strong></dt>
+  <dd>is the ID of your cluster.</dd>
   <dt><strong>your_service_name</strong></dt>
   <dd>is the name of your service.</dd>
  </dl>
 
- 10. Check that the Kubernetes secret was created:
+ 11. Check that the Kubernetes secret was created:
 
     `kubectl get secrets --namespace=default`
 
- 11. Deploy your IBM Scheduler agent on your cluster using the yaml file:
- 
-     `kubectl apply -f <yaml_file>`
+ 12. Deploy your IBM Scheduler agent on your cluster using the yaml file:
 
-
+    `kubectl apply -f <yaml_file>`
     
-  where <dl>
-  <dt><strong>yaml_file</strong></dt>
-  <dd>is the name of the yaml file.</dd>
- </dl>    
-
-
-
-The following example contains a sample yaml file, which you can customize as necessary and use to deploy the IBM Scheduler agent on your cluster, as described in step 11: 
+The following example contains a sample yaml file, which you can customize as necessary and use to deploy the IBM Scheduler agent on your cluster, as described in step 12: 
 
     apiVersion: extensions/v1beta1
     kind: Deployment
@@ -133,6 +127,73 @@ The following example contains a sample yaml file, which you can customize as ne
               secretName: <secret_name> 
 
  where <dl>
+  <dt><strong>agent_workstation_name</strong></dt>
+  <dd>is the name of the workstation where the agent is installed.</dd>
+  <dt><strong>secret_name</strong></dt>
+  <dd>is the name of your secret. To obtain this name, use the **kubectl get secrets** command.</dd>
+  </dl>
+  
+The following example contains a sample yaml file with persistent storage, which you can customize as necessary and use to deploy the IBM Scheduler agent on your cluster, as described in step 12: 
+
+    apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
+      name: workload-automation-claim
+      annotations:
+       volume.beta.kubernetes.io/storage-class: "<storage_class_name>"
+     spec:
+      accessModes:
+       - ReadWriteOnce
+      resources:
+       requests:
+        storage: 2Gi
+        
+    apiVersion: extensions/v1beta1
+    kind: Deployment
+    metadata:
+      labels:
+       app: agent
+      name: agent
+      namespace: default
+    spec:
+      selector:
+        matchLabels:
+          app: agent
+      replicas: 1
+      template:
+        metadata:
+          labels:
+            app: agent
+        spec:
+          containers:
+          - image: registry.bluemix.net/ibm_wa_agent
+            name: agent
+            resources:
+              limits:
+                cpu: 1000m
+                memory: 500Mi
+            env:
+            - name: AGENTNAME
+              value: <agent_workstation_name>
+             volumeMounts:
+             - mountPath: /opt/service-bind
+             name: service-bind-volume
+             - mountPath: /home/wauser/TWA/TWS/stdlist
+             name: workload-automation-volume
+          imagePullSecrets:
+          - name: private-registry
+          volumes:
+          - name: service-bind-volume
+            secret:
+              defaultMode: 420
+              secretName: <secret_name>
+           - name: workload-automation-volume
+            claimName: workload-automation-claim
+ 
+
+ where <dl>
+  <dt><strong>storage_class_name</strong></dt>
+  <dd>is the name of the storage class you will use for your claim. Additional information can be found at the following link: [Persistent volumes and persistent volume claims](https://console.bluemix.net/docs/containers/cs_storage_basics.html#pvc_pv) </dd>
   <dt><strong>agent_workstation_name</strong></dt>
   <dd>is the name of the workstation where the agent is installed.</dd>
   <dt><strong>secret_name</strong></dt>
