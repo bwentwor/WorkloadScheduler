@@ -2,7 +2,7 @@
 
 copyright:
   years: 2018
-lastupdated: "2018-07-31"
+lastupdated: "2018-08-03"
 
 ---
 
@@ -86,6 +86,8 @@ Perform the following steps:
 
     `kubectl apply -f <yaml_file>`
     
+Your IBM Scheduler agent is now up and running.
+
 The following example contains a sample yaml file, which you can customize as necessary and use to deploy the IBM Scheduler agent on your cluster, as described in step 12: 
 
     apiVersion: extensions/v1beta1
@@ -146,7 +148,7 @@ The following example contains a sample yaml file with persistent storage, which
        - ReadWriteOnce
       resources:
        requests:
-        storage: 2Gi
+        storage: <volume_size>
         
     apiVersion: extensions/v1beta1
     kind: Deployment
@@ -200,7 +202,20 @@ The following example contains a sample yaml file with persistent storage, which
   <dd>is the name of your secret. To obtain this name, use the **kubectl get secrets** command.</dd>
   </dl>
   
-  Your IBM Scheduler agent is now up and running.
+    
+  Evaluate the volume_size variable with the following formula:
+
+`Volume size(MB)= 120 + [ 30 x  <jobs_per_day> x (<average_joblog_size_MB> / 3 + 0.008) ]`
+
+For example, considering “average_joblog_size_MB = 0.001 MB (1KB)”, you obtain:
+
+   `1.000 jobs_per_day:  370 MB     -->          volume_size = 370Mi`
+   
+   `10.000 jobs_per_day:  2.6 GB    -->          volume_size = 2600Mi`
+    
+   `100.000 jobs_per_day: 25 GB     -->          volume_size = 25Gi`
+   
+   
 ## Related Links
 {: #rellinks}
 
