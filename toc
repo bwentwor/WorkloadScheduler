@@ -1,7 +1,7 @@
 {:navgroup: .navgroup}
 {:topicgroup: .topicgroup}
 
-{: .toc subcollection="containers" audience="compute" href="/docs/services/WorkloadScheduler/index.html"}
+{: .toc subcollection="containers" audience="compute" arm="286" href="/docs/services/WorkloadScheduler/index.html"}
 IBM Workload Scheduler
 
     {: .navgroup id="learn"}
